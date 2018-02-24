@@ -1,10 +1,10 @@
 # 如何在 Hadoop 上运行 Tensorflow
 
-本文主要内容是如何在 Hadoop 上运行 Tensorflow。本文不仅叙述了 Tensorflow 在 Hadoop 分布式文件系统（HDFS）上如何运行，还写了在各种集群管理器上如何运行。
+本文主要内容是如何在 Hadoop 上运行 Tensorflow。本文目前只写了 Tensorflow 在 Hadoop 分布式文件系统（HDFS）上如何运行，将来会扩充到在各种集群管理器上如何运行。
 
 ## HDFS
 
-我们默认读者熟悉掌握如何 @{$reading_data$读取数据}.
+我们默认读者已经了解如何 @{$reading_data$读取数据}.
 
 为了在 HDFS 上使用 Tensorflow，需要将读写数据的文件路径改为 HDFS 路径。例如：
 
@@ -32,13 +32,12 @@ filename_queue = tf.train.string_input_producer([
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${JAVA_HOME}/jre/lib/amd64/server
     ```
 
-*   **CLASSPATH**：在运行Tensoflow项目之前需要添加 Hadoop 的 jar 包。通过 `${HADOOP_HOME}/libexec/hadoop-config.sh` 创建的 CLASSPATH 路径不满足条件，需要在 libhdfs 文件夹中添加 glob：
+*   **CLASSPATH**：在运行 Tensoflow 项目之前不止需要添加 Hadoop 的 jar 包。通过 `${HADOOP_HOME}/libexec/hadoop-config.sh` 创建的 CLASSPATH 路径不满足条件，还需要在 libhdfs 文档中添加 glob：
 
     ```shell
     CLASSPATH=$(${HADOOP_HDFS_HOME}/bin/hadoop classpath --glob) python your_script.py
     ```
-    对于比 Hadoop/libhdfs 2.6.0 更旧的版本，应该自己添加classpath通配符。详情请见
-    [HADOOP-10903](https://issues.apache.org/jira/browse/HADOOP-10903).
+    如果你使用的是比 Hadoop/libhdfs 2.6.0 更旧的版本，则应该自己添加 classpath 通配符。详情请见：[HADOOP-10903](https://issues.apache.org/jira/browse/HADOOP-10903).
 
 如果 Hadoop 集群在安全模式下，要配置以下环境变量：
 
@@ -48,4 +47,4 @@ filename_queue = tf.train.string_input_producer([
     export KRB5CCNAME=/tmp/krb5cc_10002
     ```
 
-如果要运行分布式版本的 Tensorflow，那么所有的工作者需要安装 Hadoop 并且配置相应的环境变量。
+如果要运行 @{$distributed$Distributed TensorFlow}，那么所有的 workers 需要安装 Hadoop 并且配置相应的环境变量。
