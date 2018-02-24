@@ -4,7 +4,7 @@
 
 ## HDFS
 
-我们默认读者已经了解如何 @{$reading_data$读取数据}.
+我们默认读者已经了解如何 @{$reading_data$reading data}。
 
 为了在 HDFS 上使用 Tensorflow，需要将读写数据的文件路径改为 HDFS 路径。例如：
 
